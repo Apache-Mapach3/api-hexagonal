@@ -3,4 +3,6 @@ target/
 *.iml
 .git/
 .gitignore
-README.md
+mvnw
+mvnw.cmd
+HELP.md

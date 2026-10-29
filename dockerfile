@@ -1,27 +1,35 @@
-# Etapa 1: Construcción con Maven
+
+# ETAPA 1: CONSTRUCCIÓN (BUILD)
+
 FROM maven:3.9.9-eclipse-temurin-17-alpine AS build
 
-# Establecer directorio de trabajo
+ENV MAVEN_OPTS="-Xmx512m -XX:MaxMetaspaceSize=256m"
+
 WORKDIR /app
 
-# Copiar archivos de Maven
+# 1. Copiar solo el pom.xml primero (aprovecha la caché de Docker)
 COPY pom.xml .
+
+# 2. Descargar dependencias (esto separa la descarga de la compilación)
+RUN mvn dependency:go-offline -B
+
+# 3. Copiar el código fuente
 COPY src ./src
 
-# Compilar el proyecto (saltando tests)
-RUN mvn clean package -DskipTests
+# 4. Compilar en modo "Batch" (-B) para reducir el uso de memoria y logs
+RUN mvn clean package -DskipTests -B
 
-# Etapa 2: Imagen final para ejecutar
+
+# ETAPA 2: IMAGEN FINAL LIGERA (RUNTIME)
+
 FROM eclipse-temurin:17-jre-alpine
 
-# Establecer directorio de trabajo
 WORKDIR /app
 
-# Copiar el JAR compilado desde la etapa de build
+# Copiar únicamente el archivo .jar generado desde la etapa de build
 COPY --from=build /app/target/*.jar app.jar
 
-# Exponer el puerto 8080
+# Exponer el puerto que usa Spring Boot
 EXPOSE 8080
 
-# Comando para iniciar la aplicación
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xmx512m", "-XX:MaxMetaspaceSize=256m", "-jar", "app.jar"]
