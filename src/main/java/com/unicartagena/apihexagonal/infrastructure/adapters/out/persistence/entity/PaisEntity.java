@@ -1,7 +1,5 @@
 package com.unicartagena.apihexagonal.infrastructure.adapters.out.persistence.entity;
 
-package com.unicartagena.apihexagonal.infrastructure.adapters.out.persistence.entity;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,9 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaisEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nombre;
     private String presidente;
     private String continente;
@@ -26,4 +26,5 @@ public class PaisEntity {
     private String idiomaPpal;
     private Integer numUniversidades;
     private String tipoDemocracia;
+
 }
