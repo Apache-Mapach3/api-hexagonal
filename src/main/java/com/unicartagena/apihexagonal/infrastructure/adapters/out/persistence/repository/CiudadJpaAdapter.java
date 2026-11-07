@@ -24,9 +24,22 @@ public class CiudadJpaAdapter implements CiudadRepository {
 
     @Override
     public Ciudad save(Ciudad ciudad) {
-        CiudadEntity entity = new CiudadEntity(ciudad.getId(), ciudad.getNombre(), ciudad.getPaisPertenece(), ciudad.getAlcalde(), ciudad.getClima());
+        CiudadEntity entity = new CiudadEntity();
+        entity.setId(ciudad.getId());
+        entity.setNombre(ciudad.getNombre());
+        entity.setPaisPertenece(ciudad.getPaisPertenece());
+        entity.setAlcalde(ciudad.getAlcalde());
+        entity.setClima(ciudad.getClima());
+
         CiudadEntity saved = repository.save(entity);
-        return new Ciudad(saved.getId(), saved.getNombre(), saved.getPaisPertenece(), saved.getAlcalde(), saved.getClima());
+
+        Ciudad result = new Ciudad();
+        result.setId(saved.getId());
+        result.setNombre(saved.getNombre());
+        result.setPaisPertenece(saved.getPaisPertenece());
+        result.setAlcalde(saved.getAlcalde());
+        result.setClima(saved.getClima());
+        return result;
     }
 
     @Override
@@ -55,6 +68,12 @@ public class CiudadJpaAdapter implements CiudadRepository {
     }
 
     private Ciudad toDomain(CiudadEntity entity) {
-        return new Ciudad(entity.getId(), entity.getNombre(), entity.getPaisPertenece(), entity.getAlcalde(), entity.getClima());
+        Ciudad ciudad = new Ciudad();
+        ciudad.setId(entity.getId());
+        ciudad.setNombre(entity.getNombre());
+        ciudad.setPaisPertenece(entity.getPaisPertenece());
+        ciudad.setAlcalde(entity.getAlcalde());
+        ciudad.setClima(entity.getClima());
+        return ciudad;
     }
 }
