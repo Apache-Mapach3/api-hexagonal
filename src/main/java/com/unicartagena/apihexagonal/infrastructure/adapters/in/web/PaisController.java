@@ -50,4 +50,9 @@ public class PaisController {
         paisService.eliminar(id);
         return ResponseEntity.noContent().build();
     }
+    @PutMapping("/{id}")
+    @Operation(summary = "Actualizar un país existente")
+    public ResponseEntity<Pais> actualizar(@PathVariable Long id, @RequestBody Pais pais) {
+        return ResponseEntity.ok(paisService.actualizar(id, pais));
+    }
 }
