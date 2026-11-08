@@ -38,4 +38,37 @@ public class PaisServiceImpl implements PaisService {
     public void eliminar(Long id) {
         paisRepository.deleteById(id);
     }
+
+    @Override
+    public Pais actualizar(Long id, Pais pais) {
+        return paisRepository.findById(id)
+                .map(paisExistente -> {
+                    paisExistente.setNombre(pais.getNombre());
+                    paisExistente.setPresidente(pais.getPresidente());
+                    paisExistente.setContinente(pais.getContinente());
+                    paisExistente.setNombreHimno(pais.getNombreHimno());
+                    paisExistente.setNumHabitantes(pais.getNumHabitantes());
+                    paisExistente.setNumDepartamentos(pais.getNumDepartamentos());
+                    paisExistente.setNumMunicipios(pais.getNumMunicipios());
+                    paisExistente.setIdiomaPpal(pais.getIdiomaPpal());
+                    paisExistente.setNumUniversidades(pais.getNumUniversidades());
+                    paisExistente.setTipoDemocracia(pais.getTipoDemocracia());
+                    return paisRepository.save(paisExistente);
+                })
+                .orElseThrow(() -> new RuntimeException("País no encontrado con id: " + id));
+    }
+
+    @Override
+    public List<Pais> filtrarPorContinente(String continente) {
+        return paisRepository.findAll().stream()
+                .filter(p -> p.getContinente() != null && p.getContinente().equalsIgnoreCase(continente))
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    @Override
+    public List<Pais> filtrarPorPoblacionMinima(Integer min) {
+        return paisRepository.findAll().stream()
+                .filter(p -> p.getNumHabitantes() != null && p.getNumHabitantes() >= min)
+                .collect(java.util.stream.Collectors.toList());
+    }
 }
