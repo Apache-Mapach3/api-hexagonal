@@ -2,7 +2,7 @@ package com.unicartagena.apihexagonal.application.services;
 
 import com.unicartagena.apihexagonal.application.ports.PaisService;
 import com.unicartagena.apihexagonal.domain.model.Pais;
-import com.unicartagena.apihexagonal.domain.ports.PaisRepository;
+import com.unicartagena.apihexagonal.application.ports.PaisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

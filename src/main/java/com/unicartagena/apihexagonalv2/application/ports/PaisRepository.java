@@ -1,4 +1,4 @@
-package com.unicartagena.apihexagonal.domain.ports;
+package com.unicartagena.apihexagonal.application.ports;
 
 import com.unicartagena.apihexagonal.domain.model.Pais;
 
