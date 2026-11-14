@@ -1,7 +1,7 @@
 package com.unicartagena.apihexagonal.infrastructure.adapters.out.persistence;
 
 import com.unicartagena.apihexagonal.domain.model.Pais;
-import com.unicartagena.apihexagonal.domain.ports.PaisRepository;
+import com.unicartagena.apihexagonal.application.ports.PaisRepository;
 import com.unicartagena.apihexagonal.infrastructure.adapters.out.persistence.entity.PaisEntity;
 import com.unicartagena.apihexagonal.infrastructure.adapters.out.persistence.repository.JpaPaisRepository;
 import lombok.RequiredArgsConstructor;
